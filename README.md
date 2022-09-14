@@ -25,7 +25,7 @@ Imagine this app is going to be submitted to Kanye himself, so you implement a n
 What would that new killer feature be? Please implement it in the app.
 
 ## Developer
-Name: Mikhail <br/>
+Name: Mikhail Davidov <br/>
 Email: leathasmail@gmail.com <br/>
 
 ## Instructions (Docker required)

@@ -1,6 +1,10 @@
 <?php
 
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
+use App\Http\Controllers\QuotesController;
+use App\Http\Controllers\FavoriteQuotesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +18,31 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return Inertia::render('Welcome', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
 });
+
+Route::get('/dashboard', function () {
+    return Inertia::render('Dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function ()
+{
+    Route::get('quotes', [QuotesController::class, 'index'])
+         ->name('quotes');
+    Route::get('refreshQuotes', [QuotesController::class, 'getQuotes'])
+         ->name('refreshQuotes');
+
+    Route::post('addToFavorite', [FavoriteQuotesController::class, 'store'])
+         ->name('addToFavorite');
+    Route::get('favoriteQuotes', [FavoriteQuotesController::class, 'index'])
+         ->name('favoriteQuotes');
+    Route::delete('removeQuote', [FavoriteQuotesController::class, 'destroy'])
+         ->name('favoriteQuotes');
+});
+
+require __DIR__.'/auth.php';
