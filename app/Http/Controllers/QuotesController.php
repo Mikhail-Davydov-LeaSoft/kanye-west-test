@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FavoriteQuotes;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -12,11 +14,11 @@ class QuotesController extends Controller
 {
     public function index() {
         return Inertia::render('Quotes', [
-            'quotes' => $this->getQuotes(),
+            'quotes' => $this->getQuotes()->getData(),
         ]);
     }
 
-    public function getQuotes() {
+    public function getQuotes(): JsonResponse {
         $quotes = [];
         for ($i = 0; $i < 5; $i++) {
             $client = new \GuzzleHttp\Client();
@@ -24,6 +26,6 @@ class QuotesController extends Controller
             array_push($quotes, $res->getBody()->getContents());
         }
 
-        return $quotes;
+        return response()->json($quotes);
     }
 }
