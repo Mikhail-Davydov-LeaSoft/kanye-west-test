@@ -44,7 +44,7 @@ export default {
                     <div class="p-6 bg-white border-b border-gray-200">
                         <ul>
                             <li style="margin-bottom: 15px;" v-for="(quote, index) in favoriteQuotesData">
-                                {{quote}}
+                                {{quote.quote}}
                                 <button class="min">remove</button>
                             </li>
                         </ul>

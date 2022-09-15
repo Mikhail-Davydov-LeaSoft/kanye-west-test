@@ -37,12 +37,19 @@ Route::middleware('auth')->group(function ()
     Route::get('refreshQuotes', [QuotesController::class, 'getQuotes'])
          ->name('refreshQuotes');
 
-    Route::post('addToFavorite', [FavoriteQuotesController::class, 'store'])
-         ->name('addToFavorite');
+
+
     Route::get('favoriteQuotes', [FavoriteQuotesController::class, 'index'])
          ->name('favoriteQuotes');
+
+    Route::get('getFavoriteQuotes', [FavoriteQuotesController::class, 'getFavoriteQuotes'])
+         ->name('getFavoriteQuotes');
+
+    Route::post('addToFavorite', [FavoriteQuotesController::class, 'store'])
+         ->name('addToFavorite');
+
     Route::delete('removeQuote', [FavoriteQuotesController::class, 'destroy'])
-         ->name('favoriteQuotes');
+         ->name('removeQuote');
 });
 
 require __DIR__.'/auth.php';

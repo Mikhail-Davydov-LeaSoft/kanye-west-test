@@ -21,8 +21,11 @@ export default {
         };
     },
     mounted() {
-       axios.get('/favoriteQuotes').then(response => {
-                this.favoriteQuotes = response.data;
+       axios.get('/getFavoriteQuotes').then(response => {
+               for (let key in response.data) {
+                   this.favoriteQuotes.push(response.data[key].quote);
+               }
+                console.log(this.favoriteQuotes)
             });
     },
     methods: {
@@ -35,8 +38,12 @@ export default {
             await axios.post('/addToFavorite',{
                 quote: quote
             }).then(response => {
-                this.success = response.data.success;
+                this.favoriteQuotes.push(quote)
+                // this.success = response.data.success;
             });
+        },
+        isFavorite(quote) {
+            return this.favoriteQuotes.includes(quote);
         }
     }
 }
@@ -59,7 +66,7 @@ export default {
                         <ul>
                             <li style="margin-bottom: 15px;" v-for="(quote, index) in quotesData">
                                 {{quote}}
-                                <button @click="addToFavorite(quote)" class="min">add to favorites</button>
+                                <button v-if="!isFavorite(quote)" @click="addToFavorite(quote)" class="min">add to favorites</button>
                             </li>
                         </ul>
                         <button class="" @click="refreshQuotes()">Refresh</button>

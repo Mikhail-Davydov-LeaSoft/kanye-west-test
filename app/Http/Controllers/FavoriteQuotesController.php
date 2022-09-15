@@ -18,9 +18,8 @@ class FavoriteQuotesController extends Controller
     }
 
     public function getFavoriteQuotes() {
-        $quotes = [];
 
-        return $quotes;
+        return FavoriteQuotes::all()->toArray();
     }
 
     public function destroy(Request $request) {
