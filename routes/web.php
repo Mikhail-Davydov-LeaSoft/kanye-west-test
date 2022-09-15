@@ -37,8 +37,6 @@ Route::middleware('auth')->group(function ()
     Route::get('refreshQuotes', [QuotesController::class, 'getQuotes'])
          ->name('refreshQuotes');
 
-
-
     Route::get('favoriteQuotes', [FavoriteQuotesController::class, 'index'])
          ->name('favoriteQuotes');
 
@@ -48,7 +46,7 @@ Route::middleware('auth')->group(function ()
     Route::post('addToFavorite', [FavoriteQuotesController::class, 'store'])
          ->name('addToFavorite');
 
-    Route::delete('removeQuote', [FavoriteQuotesController::class, 'destroy'])
+    Route::delete('removeQuote/{quote}', [FavoriteQuotesController::class, 'destroy'])
          ->name('removeQuote');
 });
 

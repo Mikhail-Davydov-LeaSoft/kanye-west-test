@@ -25,7 +25,6 @@ export default {
                for (let key in response.data) {
                    this.favoriteQuotes.push(response.data[key].quote);
                }
-                console.log(this.favoriteQuotes)
             });
     },
     methods: {

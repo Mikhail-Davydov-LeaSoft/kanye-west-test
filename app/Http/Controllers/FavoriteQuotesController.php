@@ -22,8 +22,8 @@ class FavoriteQuotesController extends Controller
         return FavoriteQuotes::all()->toArray();
     }
 
-    public function destroy(Request $request) {
-        $quote = FavoriteQuotes::where('quote', $request->quote);
+    public function destroy($quote) {
+        $quote = FavoriteQuotes::where('quote', $quote);
 
         $quote->delete();
     }

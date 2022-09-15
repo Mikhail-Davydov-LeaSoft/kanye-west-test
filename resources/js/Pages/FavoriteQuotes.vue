@@ -15,14 +15,26 @@ export default {
     },
     data() {
         return {
-            favoriteQuotesData: this.favoriteQuotes
+            favoriteQuotesData: this.prepareQuotesData()
         };
     },
     methods: {
-        async removeQuote() {
-            await axios.get('/removeQuote').then(response => {
-                this.status = response.data.success;
+        async removeQuote(quote) {
+            await axios.delete('/removeQuote/'+quote).then(response => {
+                let index = this.favoriteQuotesData.indexOf(quote);
+                if (index > -1) {
+                    this.favoriteQuotesData.splice(index, 1);
+                }
+                // this.status = response.data.success;
             });
+        },
+        prepareQuotesData() {
+            let quotes = [];
+            for (let key in this.favoriteQuotes) {
+                quotes.push(this.favoriteQuotes[key].quote);
+            }
+
+            return quotes;
         }
     }
 }
@@ -44,8 +56,8 @@ export default {
                     <div class="p-6 bg-white border-b border-gray-200">
                         <ul>
                             <li style="margin-bottom: 15px;" v-for="(quote, index) in favoriteQuotesData">
-                                {{quote.quote}}
-                                <button class="min">remove</button>
+                                {{quote}}
+                                <button @click="removeQuote(quote)" class="min">remove</button>
                             </li>
                         </ul>
                     </div>
