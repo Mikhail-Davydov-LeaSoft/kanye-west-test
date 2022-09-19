@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\QuotesController;
 use App\Http\Controllers\FavoriteQuotesController;
+use Illuminate\Http\Request;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +50,11 @@ Route::middleware('auth')->group(function ()
 
     Route::delete('removeQuote/{quote}', [FavoriteQuotesController::class, 'destroy'])
          ->name('removeQuote');
+
+    Route::post('/tokens/create', function (Request $request) {
+        $token = $request->user()->createToken($request->token_name);
+        return ['token' => $token->plainTextToken];
+    });
 });
 
 require __DIR__.'/auth.php';

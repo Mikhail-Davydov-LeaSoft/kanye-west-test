@@ -10,19 +10,19 @@ use Inertia\Inertia;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\ClientException;
 use App\Http\Controllers\Controller;
+use App\Services\QuoteService;
 
 
 class QuotesApiController extends Controller
 {
+    private $quoteService;
+
+    public function __construct(QuoteService $quoteService)
+    {
+        $this->quoteService = $quoteService;
+    }
     public function getQuotes($count = 1): JsonResponse {
 
-        $quotes = [];
-        for ($i = 0; $i < $count; $i++) {
-            $client = new \GuzzleHttp\Client();
-            $res = $client->get('https://api.kanye.rest/text');
-            array_push($quotes, $res->getBody()->getContents());
-        }
-
-        return response()->json($quotes);
+        return response()->json($this->quoteService->getQuotes($count));
     }
 }
